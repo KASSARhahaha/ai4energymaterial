@@ -1,6 +1,29 @@
 /* 能源材料智研官网：首屏场景、导航、进场动画、截图切换与「计算 vs 实验」对比图。无依赖。 */
 'use strict';
 (() => {
+  // 颜色模式：暗灰色（默认）/ 白色。初始主题已由 index.html 头部脚本按 localStorage 写入 data-theme。
+  const root = document.documentElement;
+  const themeBtn = document.querySelector('.theme-btn');
+  const themeMeta = document.querySelector('meta[name="theme-color"]');
+  const syncTheme = () => {
+    const light = root.dataset.theme === 'light';
+    const label = light ? '切换到暗灰色模式' : '切换到白色模式';
+    if (themeBtn) { themeBtn.setAttribute('aria-label', label); themeBtn.title = label; }
+    if (themeMeta) themeMeta.content = light ? '#ffffff' : '#151412';
+  };
+  syncTheme();
+  if (themeBtn) themeBtn.addEventListener('click', () => {
+    const next = root.dataset.theme === 'light' ? 'dark' : 'light';
+    const calm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!calm) {
+      root.classList.add('theme-anim');
+      window.setTimeout(() => root.classList.remove('theme-anim'), 450);
+    }
+    root.dataset.theme = next;
+    syncTheme();
+    try { localStorage.setItem('ai4em-site-theme', next); } catch (e) { /* 无法存储（如隐私模式）时只在当前页面生效 */ }
+  });
+
   // 首屏等距场景（概念示意）
   const stage = document.getElementById('hero-stage');
   if (stage && window.HeroScene) stage.innerHTML = window.HeroScene.markup();
