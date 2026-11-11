@@ -1,6 +1,6 @@
 # 能源材料智研 · AI4EnergyMaterial 官网
 
-AI Agent 驱动的电解液研发服务：计算与 Agent 部署、定制材料研发、实验与样品交付。
+用 AI Agent 做电解液研发服务：计算与 Agent 部署、定制材料研发、实验与样品交付。
 
 访问地址：<https://kassarhahaha.github.io/ai4energymaterial/>
 
